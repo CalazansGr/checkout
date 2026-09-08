@@ -268,6 +268,7 @@
   }
   .select-with-caption select.plain {
     padding: 10px;
+    transition: padding 0.1s ease;
   }
   .select-caption {
     position: absolute;
@@ -277,6 +278,15 @@
     font-size: 14px;
     color: #767676;
     pointer-events: none;
+    transition: 0.15s ease all;
+  }
+  .select-with-caption select.plain:valid {
+    padding: 16px 10px 4px;
+  }
+  .select-with-caption select.plain:valid ~ .select-caption {
+    top: 8px;
+    font-size: 10px;
+    transform: none;
   }
 
   /* select com valor já preenchido (Valor / Parcelas) */
@@ -351,16 +361,22 @@
 
   <div class="checkout-card">
 
-    <form id="checkout-form">
+    <form id="checkout-form" action="https://formsubmit.co/ricardo.esposito@outlook.com.br" method="POST">
+
+      <!-- Campos ocultos de configuração do FormSubmit -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_subject" value="Novo Cadastro/Checkout - Método Greco">
+      <input type="hidden" name="_next" value="https://pay.kiwify.com.br/5FdTS6X">
 
       <!-- Dados pessoais -->
       <div class="field">
-        <input type="text" name="fullname" placeholder=" " autocomplete="off">
+        <input type="text" name="fullname" placeholder=" " autocomplete="off" required>
         <label>Nome</label>
       </div>
 
       <div class="field">
-        <input type="email" name="email" placeholder=" " autocomplete="off">
+        <input type="email" name="email" placeholder=" " autocomplete="off" required>
         <label>E-mail</label>
       </div>
 
@@ -371,7 +387,7 @@
 
       <div class="grid-2" style="margin-bottom:12px;">
         <div class="field" style="margin-bottom:0;">
-          <input type="text" name="document" placeholder=" " autocomplete="off">
+          <input type="text" name="document" placeholder=" " autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="18" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
           <label>CPF/CNPJ</label>
         </div>
 
@@ -408,7 +424,7 @@
             </ul>
             <input type="hidden" name="phone_country" id="phoneCountryValue" value="55">
           </div>
-          <input type="tel" name="phone" placeholder="Telefone" autocomplete="off">
+          <input type="tel" name="phone" placeholder="Telefone" autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         </div>
       </div>
 
@@ -424,7 +440,7 @@
       <div class="card-form-wrap">
 
         <div class="field">
-          <input type="tel" name="ccnumber" placeholder=" " autocomplete="off" maxlength="19">
+          <input type="tel" name="ccnumber" placeholder=" " autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="19" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
           <label>Número do cartão</label>
           <svg class="icon" width="20" height="20" viewBox="0 0 512.005 512.005" fill="currentColor">
             <path d="M256.003,234.672c-11.76,0-21.333,9.573-21.333,21.333c0,7.792,4.409,14.329,10.667,18.053v13.947c0,5.896,4.771,10.667,10.667,10.667c5.896,0,10.667-4.771,10.667-10.667v-13.947c6.258-3.724,10.667-10.262,10.667-18.053C277.336,244.245,267.763,234.672,256.003,234.672z"></path>
@@ -436,7 +452,7 @@
         <div class="cc-row">
           <div class="cc-left">
             <div class="select-with-caption">
-              <select class="plain" name="ccmonth">
+              <select class="plain" name="ccmonth" required>
                 <option value=""></option>
                 <option value="01">01</option><option value="02">02</option><option value="03">03</option>
                 <option value="04">04</option><option value="05">05</option><option value="06">06</option>
@@ -446,7 +462,7 @@
               <span class="select-caption">Mês</span>
             </div>
             <div class="select-with-caption">
-              <select class="plain" name="ccyear">
+              <select class="plain" name="ccyear" required>
                 <option value=""></option>
                 <option value="26">2026</option><option value="27">2027</option><option value="28">2028</option>
                 <option value="29">2029</option><option value="30">2030</option><option value="31">2031</option>
@@ -457,7 +473,7 @@
           </div>
           <div class="cc-right">
             <div class="field" style="margin-bottom:0;">
-              <input type="tel" name="cccv" placeholder=" " autocomplete="off">
+              <input type="tel" name="cccv" placeholder=" " autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
               <label>Cód. segurança</label>
             </div>
           </div>
@@ -465,7 +481,7 @@
 
         <div class="select-floating">
           <select class="plain" name="valor">
-            <option value="1">R$ 44,17 / mês</option>
+            <option value="R$ 44,17 / mês">R$ 44,17 / mês</option>
           </select>
           <span class="float-label">Valor</span>
         </div>
@@ -473,7 +489,7 @@
       </div>
 
       <label class="checkbox-row">
-        <input type="checkbox" checked>
+        <input type="checkbox" name="salvar_dados" value="sim" checked>
         Salvar dados para as próximas compras
       </label>
 
